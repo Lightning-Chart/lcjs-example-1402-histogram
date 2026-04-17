@@ -29,6 +29,8 @@ For most up to date documentation on realizing Histogram, see [Histograms](https
 
 ## API Links
 
+* [XY chart]
+* [Rectangle series]
 
 
 ## Support
@@ -49,7 +51,9 @@ Direct developer email support can be purchased through a [Support Plan][4] or b
 [3]: https://stackoverflow.com/questions/tagged/lightningchart
 [4]: https://lightningchart.com/support-services/
 
-© LightningChart Ltd 2009-2025. All rights reserved.
+© LightningChart Ltd 2009-2026. All rights reserved.
 
 
+[XY chart]: https://lightningchart.com/js-charts/api-documentation/v8.2.0/classes/ChartXY.html
+[Rectangle series]: https://lightningchart.com/js-charts/api-documentation/v8.2.0/classes/RectangleSeries.html
 
