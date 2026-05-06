@@ -66,7 +66,6 @@ const chart = lightningChart({
 textRenderer: window.lcjsSmallView ? lcjs.htmlTextRenderer : undefined,
     })
     .setTitle('Histogram chart')
-    .setCursorMode('show-pointed')
     .setUserInteractions({
         rectangleZoom: {
             y: false,
@@ -88,28 +87,6 @@ chart.axisX.setTickStrategy(AxisTickStrategies.Numeric, (strategy) =>
     }),
 )
 
-// Override default cursor in order to position cursor at the top-center of each bar, rather than default position (center of rectangle)
-const cursor = chart.addCursor()
-chart.setCustomCursor((event) => {
-    const { hit } = event
-    if (!hit) {
-        cursor.setVisible(false)
-        return
-    }
-    if (!isHitRectangle(hit)) return
-    // Override cursor position - instead of rectangle center, place it at top
-    const dimensions = hit.figure.getDimensionsTwoPoints()
-    cursor
-        .setVisible(true)
-        .setPosition({
-            pointMarkerScale: chart.coordsAxis,
-            resultTableScale: chart.coordsAxis,
-            pointMarker: { x: (dimensions.x1 + dimensions.x2) / 2, y: dimensions.y2 },
-            resultTable: { x: (dimensions.x1 + dimensions.x2) / 2, y: dimensions.y2 },
-        })
-        .setResultTable((rt) => rt.setContent(chart.getCursorFormatting()(chart, hit, [hit])))
-})
-
 // NOTE: In actual app, can replace with: const barFillStyle = new SolidFill({ color: ColorRGBA(255, 0, 0) })
 const barFillStyle = (() => {
     const v = chart.getTheme().pointSeriesFillStyle
@@ -128,4 +105,9 @@ bins.forEach((bin) => {
         y1: 0,
         y2: bin.values.length,
     })
+})
+
+// Override default cursor in order to position cursor at the top-center of each bar, rather than default position (center of rectangle)
+rectSeries.setCursorBehavior({
+    location: (info) => ({ x: (info.x1 + info.x2) / 2, y: info.y2 }),
 })
